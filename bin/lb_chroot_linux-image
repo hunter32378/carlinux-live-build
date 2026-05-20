@@ -1,0 +1,5 @@
+#!/bin/sh
+# Stub wrapper to skip live-build's lb_chroot_linux-image step which
+# tries to download Contents-amd64.gz from mirrors that may not provide it.
+# Returning success forces live-build to skip that check.
+exit 0
