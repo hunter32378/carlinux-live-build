@@ -26,6 +26,7 @@ lb config noauto \
     --iso-volume "CARLOSOS_LIVE" \
     --iso-preparer "Carlos Torres Project" \
     --binary-images iso-hybrid \
+    --linux-packages "linux-image-amd64" \
     --security false \
     --memtest none \
     --firmware-chroot true
