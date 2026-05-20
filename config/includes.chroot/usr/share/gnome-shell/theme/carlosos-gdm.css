@@ -1,0 +1,342 @@
+/* =============================================================================
+   CarlosOS GDM Theme - Professional Elite Login Screen
+   Tema personalizado para pantalla de inicio de sesión de CarlosOS
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   VARIABLES GLOBALES
+   ----------------------------------------------------------------------------- */
+:root {
+  --carlosos-primary: #00BFFF;
+  --carlosos-primary-dark: #0099CC;
+  --carlosos-secondary: #7B68EE;
+  --carlosos-accent: #00FFFF;
+  --bg-dark: #0a0e1a;
+  --bg-darker: #050710;
+  --bg-light: #121826;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B0B8D0;
+  --success: #00FF88;
+  --warning: #FFB800;
+  --error: #FF4757;
+  --glow-blue: rgba(0, 191, 255, 0.6);
+  --glow-purple: rgba(123, 104, 238, 0.6);
+}
+
+/* -----------------------------------------------------------------------------
+   FONDO DE PANTALLA
+   ----------------------------------------------------------------------------- */
+#lockDialogGroup {
+  background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 50%, #1a103c 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* -----------------------------------------------------------------------------
+   LOGO CARLOSOS
+   ----------------------------------------------------------------------------- */
+.logo-container {
+  width: 280px;
+  height: 280px;
+  margin: 0 auto 30px;
+  background: radial-gradient(circle at center, rgba(0, 191, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+  background: url("resource:///org/gnome/shell/theme/carlosos/carlosos-logo.svg") no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(0 0 30px var(--glow-blue));
+  animation: logoGlow 2s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 0 30px var(--glow-blue)) drop-shadow(0 0 60px var(--glow-purple)); }
+  50% { filter: drop-shadow(0 0 50px var(--glow-blue)) drop-shadow(0 0 100px var(--glow-purple)); }
+}
+
+/* -----------------------------------------------------------------------------
+   TÍTULO CARLOSOS
+   ----------------------------------------------------------------------------- */
+#loginTitle {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px var(--glow-blue), 0 0 40px var(--glow-purple);
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--text-primary) 0%, var(--carlosos-primary) 50%, var(--carlosos-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* -----------------------------------------------------------------------------
+   CAMPO DE CONTRASEÑA
+   ----------------------------------------------------------------------------- */
+.password-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 191, 255, 0.3);
+  border-radius: 50px;
+  padding: 8px 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.password-container:focus-within {
+  border-color: var(--carlosos-primary);
+  box-shadow: 0 0 30px var(--glow-blue), inset 0 0 20px rgba(0, 191, 255, 0.1);
+  transform: scale(1.02);
+}
+
+StEntry {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 18px;
+  padding: 15px 25px;
+  caret-color: var(--carlosos-primary);
+  selection-background-color: var(--carlosos-primary);
+}
+
+StEntry:focus {
+  background: transparent;
+  box-shadow: none;
+}
+
+StEntry::placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Icono de usuario */
+.user-icon {
+  icon-size: 64px;
+  margin-bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid var(--carlosos-primary);
+  box-shadow: 0 0 20px var(--glow-blue);
+}
+
+/* -----------------------------------------------------------------------------
+   BOTÓN DE INICIO DE SESIÓN
+   ----------------------------------------------------------------------------- */
+.login-button {
+  background: linear-gradient(135deg, var(--carlosos-primary) 0%, var(--carlosos-secondary) 100%);
+  border: none;
+  border-radius: 50px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  padding: 16px 60px;
+  margin: 20px auto;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 10px 40px var(--glow-blue);
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 60px var(--glow-blue), 0 0 30px var(--glow-purple);
+}
+
+.login-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 5px 20px var(--glow-blue);
+}
+
+.login-button:focus {
+  outline: 3px solid var(--carlosos-accent);
+  outline-offset: 3px;
+}
+
+/* -----------------------------------------------------------------------------
+   BOTONES DE ACCESO RÁPIDO (Accesibilidad, Idioma, etc.)
+   ----------------------------------------------------------------------------- */
+.caps-lock-warning-label {
+  color: var(--warning);
+  font-size: 14px;
+  margin-top: 10px;
+  text-shadow: 0 0 10px var(--warning);
+}
+
+#loginUserMessage {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* -----------------------------------------------------------------------------
+   BARRA SUPERIOR (Fecha/Hora)
+   ----------------------------------------------------------------------------- */
+#panel {
+  background: rgba(10, 14, 26, 0.8);
+  backdrop-filter: blur(30px);
+  border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+}
+
+#panelLeft {
+  color: var(--text-primary);
+}
+
+#panelCenter {
+  color: var(--carlosos-primary);
+  font-weight: 600;
+  text-shadow: 0 0 10px var(--glow-blue);
+}
+
+#panelRight {
+  color: var(--text-primary);
+}
+
+.clock {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* -----------------------------------------------------------------------------
+   ANIMACIONES DE CARGA
+   ----------------------------------------------------------------------------- */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(0, 191, 255, 0.2);
+  border-top-color: var(--carlosos-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* -----------------------------------------------------------------------------
+   MENSAJES DE ERROR
+   ----------------------------------------------------------------------------- */
+.notification-banner {
+  background: rgba(255, 71, 87, 0.1);
+  border: 2px solid var(--error);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 30px rgba(255, 71, 87, 0.3);
+}
+
+.notification-title {
+  color: var(--error);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.notification-body {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* -----------------------------------------------------------------------------
+   EFECTOS DE FONDO ANIMADO
+   ----------------------------------------------------------------------------- */
+.background-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--carlosos-primary);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float 15s infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   DISEÑO RESPONSIVE
+   ----------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #loginTitle {
+    font-size: 36px;
+  }
+  
+  .logo {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .password-container {
+    max-width: 300px;
+  }
+  
+  .login-button {
+    padding: 14px 40px;
+    font-size: 16px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   MODO OSCURO MEJORADO
+   ----------------------------------------------------------------------------- */
+.dark-mode {
+  --bg-dark: #050710;
+  --bg-light: #0a0e1a;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8892B0;
+}
+
+/* -----------------------------------------------------------------------------
+   ACCESIBILIDAD
+   ----------------------------------------------------------------------------- */
+.high-contrast {
+  --carlosos-primary: #00FFFF;
+  --text-primary: #FFFFFF;
+  --bg-dark: #000000;
+}
+
+/* Focus visible para navegación por teclado */
+*:focus-visible {
+  outline: 3px solid var(--carlosos-accent);
+  outline-offset: 3px;
+}

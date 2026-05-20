@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+
+# CarlosOS Live Build Configuration
+# Configuración oficial para CarlosOS basado en Debian Bookworm
+# © 2026 Carlos Torres - Todos los derechos reservados
+
+lb config noauto \
+    --architectures amd64 \
+    --distribution bookworm \
+    --debian-installer live \
+    --mode debian \
+    --archive-areas "main contrib non-free non-free-firmware" \
+    --mirror-bootstrap http://deb.debian.org/debian/ \
+    --mirror-chroot http://deb.debian.org/debian/ \
+    --mirror-binary http://deb.debian.org/debian/ \
+    --mirror-chroot-security http://security.debian.org/debian-security/ \
+    --mirror-binary-security http://security.debian.org/debian-security/ \
+    --parent-mirror-bootstrap http://deb.debian.org/debian/ \
+    --parent-mirror-chroot http://deb.debian.org/debian/ \
+    --parent-mirror-binary http://deb.debian.org/debian/ \
+    --apt-options "--yes --force-yes" \
+    --bootappend-live "boot=live components username=user hostname=carlosos quiet splash" \
+    --iso-application "CarlosOS Live 1.0" \
+    --iso-publisher "Carlos Torres" \
+    --iso-volume "CARLOSOS_LIVE" \
+    --iso-preparer "Carlos Torres Project" \
+    --binary-images iso-hybrid \
+    --memtest none \
+    --firmware-chroot true \
+    --security true

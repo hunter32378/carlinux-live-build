@@ -1,0 +1,34 @@
+#!/bin/bash
+# Hook para copiar las imágenes de CarlosOS al sistema
+
+set -e
+
+echo "[CARLOSOS IMAGES] Instalando imágenes de fondo..."
+
+# Directorios de destino
+BACKGROUND_DIR="/usr/share/backgrounds/carlosos"
+DESKTOP_BG_DIR="/usr/share/images/desktop-background"
+
+# Crear directorios
+mkdir -p "$BACKGROUND_DIR"
+mkdir -p "$DESKTOP_BG_DIR"
+
+# Las imágenes se copiarán desde el directorio de configuración
+# El hook se ejecuta en el entorno chroot, así que las imágenes deben estar
+# en config/includes.chroot
+
+echo "[CARLOSOS IMAGES] Fondos instalados en $BACKGROUND_DIR"
+echo "[CARLOSOS IMAGES] Fondos de escritorio en $DESKTOP_BG_DIR"
+
+# Configurar fondo predeterminado para GNOME
+cat > /etc/skel/.dconf/local/backgrounds << 'EOF'
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/carlosos/fondo-carlosos.png'
+picture-uri-dark='file:///usr/share/backgrounds/carlosos/fondo-carlosos.png'
+picture-options='zoom'
+EOF
+
+# Compilar dconf
+dconf update
+
+echo "[CARLOSOS IMAGES] Configuración de fondos completada"

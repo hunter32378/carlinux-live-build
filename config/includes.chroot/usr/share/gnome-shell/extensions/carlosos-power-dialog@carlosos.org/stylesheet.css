@@ -1,0 +1,367 @@
+/* =============================================================================
+   CarlosOS Power Dialog Styles
+   Estilos para el diálogo de apagado/reinicio profesional
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   CONTENEDOR PRINCIPAL DEL DIÁLOGO
+   ----------------------------------------------------------------------------- */
+.carlosos-power-dialog {
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.98) 0%, rgba(5, 7, 16, 0.98) 100%);
+  border: 2px solid rgba(0, 191, 255, 0.3);
+  border-radius: 30px;
+  box-shadow: 0 0 100px rgba(0, 191, 255, 0.2),
+              0 0 200px rgba(123, 104, 238, 0.1),
+              inset 0 0 60px rgba(0, 191, 255, 0.05);
+  padding: 50px;
+  min-width: 600px;
+  backdrop-filter: blur(50px);
+}
+
+.carlosos-power-dialog-layout {
+  spacing: 30px;
+  padding: 20px;
+}
+
+/* -----------------------------------------------------------------------------
+   LOGO Y TÍTULOS
+   ----------------------------------------------------------------------------- */
+.carlosos-logo-container {
+  spacing: 20px;
+  padding: 20px;
+}
+
+.carlosos-logo-icon {
+  icon-size: 120px;
+  color: #00BFFF;
+  filter: drop-shadow(0 0 30px rgba(0, 191, 255, 0.6))
+          drop-shadow(0 0 60px rgba(123, 104, 238, 0.4));
+  animation: logo-pulse 3s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 30px rgba(0, 191, 255, 0.6))
+            drop-shadow(0 0 60px rgba(123, 104, 238, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 50px rgba(0, 191, 255, 0.8))
+            drop-shadow(0 0 100px rgba(123, 104, 238, 0.6));
+  }
+}
+
+.carlosos-power-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 0 20px rgba(0, 191, 255, 0.6),
+               0 0 40px rgba(123, 104, 238, 0.4);
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #FFFFFF 0%, #00BFFF 50%, #7B68EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.carlosos-power-subtitle {
+  font-size: 20px;
+  color: #B0B8D0;
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* -----------------------------------------------------------------------------
+   CONTENEDOR DE BOTONES
+   ----------------------------------------------------------------------------- */
+.carlosos-button-box {
+  spacing: 20px;
+  padding: 20px;
+}
+
+.carlosos-button-row {
+  spacing: 20px;
+  padding: 10px;
+}
+
+/* -----------------------------------------------------------------------------
+   BOTONES DE ACCIÓN
+   ----------------------------------------------------------------------------- */
+.carlosos-action-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 191, 255, 0.3);
+  border-radius: 20px;
+  padding: 25px 40px;
+  min-width: 200px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.carlosos-action-button:hover {
+  background: rgba(0, 191, 255, 0.15);
+  border-color: #00BFFF;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 191, 255, 0.4),
+              0 0 30px rgba(0, 191, 255, 0.3);
+}
+
+.carlosos-action-button:active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+}
+
+.carlosos-action-button:focus {
+  outline: 3px solid #00FFFF;
+  outline-offset: 3px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+/* Botones primarios (Apagar/Reiniciar) */
+.carlosos-action-button-primary {
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.2) 0%, rgba(123, 104, 238, 0.2) 100%);
+  border-color: rgba(0, 191, 255, 0.5);
+}
+
+.carlosos-action-button-primary:hover {
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.3) 0%, rgba(123, 104, 238, 0.3) 100%);
+  border-color: #00BFFF;
+  box-shadow: 0 15px 50px rgba(0, 191, 255, 0.5),
+              0 0 40px rgba(123, 104, 238, 0.3);
+}
+
+/* Contenido del botón */
+.carlosos-button-content {
+  spacing: 12px;
+}
+
+.carlosos-button-icon {
+  icon-size: 48px;
+  color: #00BFFF;
+}
+
+.carlosos-action-button:hover .carlosos-button-icon {
+  color: #00FFFF;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.6));
+}
+
+.carlosos-button-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.carlosos-action-button:hover .carlosos-button-label {
+  color: #00FFFF;
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+
+/* -----------------------------------------------------------------------------
+   BOTÓN CANCELAR
+   ----------------------------------------------------------------------------- */
+.carlosos-cancel-button {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 12px 40px;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.carlosos-cancel-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.carlosos-cancel-button:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.carlosos-cancel-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #B0B8D0;
+}
+
+.carlosos-cancel-button:hover .carlosos-cancel-label {
+  color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------------------------
+   INFORMACIÓN DEL SISTEMA
+   ----------------------------------------------------------------------------- */
+.carlosos-system-info {
+  spacing: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carlosos-info-label {
+  font-size: 14px;
+  color: #6B7280;
+  text-align: center;
+  font-weight: 400;
+}
+
+/* -----------------------------------------------------------------------------
+   DIÁLOGO DE CONFIRMACIÓN
+   ----------------------------------------------------------------------------- */
+.carlosos-confirm-dialog {
+  background: rgba(10, 14, 26, 0.98);
+  border: 2px solid rgba(255, 184, 0, 0.5);
+  border-radius: 20px;
+  box-shadow: 0 0 80px rgba(255, 184, 0, 0.3);
+  padding: 40px;
+  min-width: 450px;
+  backdrop-filter: blur(30px);
+}
+
+.carlosos-confirm-layout {
+  spacing: 25px;
+  padding: 20px;
+}
+
+.carlosos-confirm-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(255, 184, 0, 0.5);
+}
+
+.carlosos-confirm-message {
+  font-size: 16px;
+  color: #B0B8D0;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.carlosos-confirm-buttons {
+  spacing: 15px;
+  padding-top: 20px;
+}
+
+.carlosos-confirm-button {
+  background: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+  border: none;
+  border-radius: 15px;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(255, 184, 0, 0.4);
+}
+
+.carlosos-confirm-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(255, 184, 0, 0.6);
+}
+
+.carlosos-confirm-button:active {
+  transform: translateY(-1px);
+}
+
+/* -----------------------------------------------------------------------------
+   ANIMACIONES
+   ----------------------------------------------------------------------------- */
+.carlosos-power-dialog {
+  animation: dialog-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   EFECTOS DE FONDO ANIMADO (Partículas)
+   ----------------------------------------------------------------------------- */
+.carlosos-particle-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.carlosos-particle {
+  width: 4px;
+  height: 4px;
+  background: #00BFFF;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: particle-float 15s infinite;
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   MODO SEGURO / BAJO CONTRASTE
+   ----------------------------------------------------------------------------- */
+.high-contrast .carlosos-power-dialog {
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+}
+
+.high-contrast .carlosos-action-button {
+  border-width: 3px;
+}
+
+/* -----------------------------------------------------------------------------
+   RESPONSIVE
+   ----------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .carlosos-power-dialog {
+    min-width: 350px;
+    padding: 30px;
+  }
+
+  .carlosos-power-title {
+    font-size: 36px;
+  }
+
+  .carlosos-logo-icon {
+    icon-size: 80px;
+  }
+
+  .carlosos-button-row {
+    spacing: 10px;
+  }
+
+  .carlosos-action-button {
+    min-width: 140px;
+    padding: 20px 25px;
+  }
+
+  .carlosos-button-icon {
+    icon-size: 36px;
+  }
+
+  .carlosos-button-label {
+    font-size: 14px;
+  }
+}

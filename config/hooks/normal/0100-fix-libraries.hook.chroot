@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+# Fix libraries in chroot environment
+echo "Fixing libraries in chroot environment..."
+
+# Ensure essential libraries are available
+apt-get update
+apt-get install -y libstdc++6 libgcc-s1
+
+# Clean up
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+
+echo "Libraries fixed in chroot."

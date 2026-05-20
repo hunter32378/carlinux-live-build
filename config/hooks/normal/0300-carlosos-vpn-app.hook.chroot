@@ -1,0 +1,53 @@
+#!/bin/bash
+# Hook para instalar dependencias y configurar CarlosOS VPN App
+
+set -e
+
+APP_DIR="/home/user/mi_app"
+
+echo ">>> [CARLOSOS VPN] Verificando aplicación personalizada en $APP_DIR"
+
+if [ -d "$APP_DIR" ] && [ -f "$APP_DIR/package.json" ]; then
+    echo ">>> [CARLOSOS VPN] Encontrado package.json. Instalando dependencias con npm..."
+
+    # Navegar al directorio de la aplicación
+    cd "$APP_DIR"
+
+    # Instalar dependencias como root con permisos adecuados
+    npm install --unsafe-perm || {
+        echo ">>> [CARLOSOS VPN] Error en npm install, intentando con opciones adicionales..."
+        npm install --unsafe-perm --legacy-peer-deps
+    }
+
+    # Cambiar el propietario al usuario 'user' (UID 1000)
+    chown -R 1000:1000 "$APP_DIR"
+
+    # Crear script de lanzamiento
+    cat > /usr/local/bin/carlosos-vpn << 'EOF'
+#!/bin/bash
+# Lanzador de CarlosOS VPN
+cd /home/user/mi_app
+npm start
+EOF
+    chmod +x /usr/local/bin/carlosos-vpn
+
+    # Crear archivo .desktop para el menú de aplicaciones
+    cat > /usr/share/applications/carlosos-vpn.desktop << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CarlosOS VPN
+Comment=VPN Application para CarlosOS
+Exec=/usr/local/bin/carlosos-vpn
+Icon=network-workgroup
+Terminal=false
+Categories=Network;Utility;
+Keywords=vpn;network;security;
+EOF
+
+    echo ">>> [CARLOSOS VPN] Aplicación instalada y configurada correctamente"
+    echo ">>> [CARLOSOS VPN] Lanzador disponible en: /usr/local/bin/carlosos-vpn"
+else
+    echo ">>> [CARLOSOS VPN] ADVERTENCIA: No se encontró la aplicación en $APP_DIR"
+    echo ">>> [CARLOSOS VPN] La aplicación se puede instalar manualmente después del boot"
+fi

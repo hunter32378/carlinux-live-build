@@ -1,0 +1,16 @@
+{
+  "uuid": "carlosos-power-dialog@carlosos.org",
+  "name": "CarlosOS Power Dialog",
+  "description": "Diálogo de apagado/reinicio profesional estilo élite para CarlosOS",
+  "version": 1,
+  "shell-version": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "url": "https://carlosos.org",
+  "settings-schema": "org.gnome.shell.extensions.carlosos-power-dialog"
+}

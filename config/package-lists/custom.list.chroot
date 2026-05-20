@@ -1,0 +1,118 @@
+# CarlosOS Live - Lista de Paquetes Optimizada (Ligera)
+# Basado en Debian Bookworm - XFCE Edition
+
+# === SISTEMA BASE ===
+systemd
+systemd-sysv
+dbus
+udev
+firmware-linux-free
+firmware-misc-nonfree
+firmware-realtek
+firmware-atheros
+firmware-iwlwifi
+firmware-libertas
+firmware-brcm80211
+firmware-amd-graphics
+
+# === ENTORNO DE ESCRITORIO (LIGERO) ===
+xfce4
+xfce4-goodies
+lightdm
+lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
+xserver-xorg
+
+# === DRIVERS DE VIDEO ===
+xserver-xorg-video-all
+mesa-utils
+
+# === HERRAMIENTAS DE SISTEMA Y RENDIMIENTO ===
+zram-tools
+vim
+nano
+htop
+neofetch
+curl
+wget
+git
+screen
+rsync
+unzip
+zip
+p7zip-full
+tar
+gparted
+timeshift
+bleachbit
+
+# === REDES ===
+network-manager
+network-manager-gnome
+network-manager-openvpn
+network-manager-openvpn-gnome
+wireless-tools
+wpasupplicant
+net-tools
+iputils-ping
+dnsutils
+openssh-client
+pulseaudio
+pavucontrol
+blueman
+bluez
+
+# === NAVEGADORES ===
+firefox-esr
+firefox-esr-l10n-es-es
+
+# === OFICINA (Ligera) ===
+abiword
+gnumeric
+fonts-liberation
+fonts-dejavu
+
+# === MULTIMEDIA (Ligero) ===
+mpv
+ffmpeg
+audacious
+ristretto
+simple-scan
+
+# === HERRAMIENTAS DE DESARROLLO (Básicas) ===
+build-essential
+python3
+nodejs
+npm
+git
+
+# === SEGURIDAD ===
+ufw
+gufw
+
+# === ACCESIBILIDAD ===
+onboard
+
+# === FONTS ===
+fonts-noto
+fonts-noto-cjk
+fonts-noto-color-emoji
+fonts-dejavu
+fonts-liberation
+fonts-roboto
+
+# === CARLOSOS VPN APP DEPENDENCIES ===
+libgtk-3-0
+libnotify4
+libnss3
+libxss1
+libxtst6
+xdg-utils
+libatspi2.0-2
+libdrm2
+libxkbfile1
+libgbm1
+
+# === CARLOSOS EXTRAS ===
+plymouth
+plymouth-themes

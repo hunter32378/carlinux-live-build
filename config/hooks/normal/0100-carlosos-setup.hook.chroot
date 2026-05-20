@@ -1,0 +1,198 @@
+#!/bin/bash
+# Hook para configurar CarlosOS durante la construcción
+# Se ejecuta en la fase chroot del live-build
+
+set -e
+
+# Función de logging
+log() {
+    echo "[CARLOSOS SETUP] $1"
+}
+
+log "Iniciando configuración personalizada de CarlosOS..."
+
+# Crear directorio para configuraciones de CarlosOS
+mkdir -p /etc/carlosos
+
+# Configurar hostname
+echo "carlosos" > /etc/hostname
+
+# Configurar issue (mensaje de login)
+cat > /etc/issue << 'EOF'
+CarlosOS Live 1.0 \n \l
+
+   ____           _   ____   _____
+  / ___|__ _ _ __| |_|  _ \ / ___|
+ | |   / _` | '__| __| | | | |  _
+ | |__| (_| | |  | |_| |_| | | | |
+  \____\__,_|_|   \__|____/|_| |_|
+
+        CarlosOS Live 1.0
+   Sistema Operativo Personalizado
+   Basado en Debian GNU/Linux
+   
+   © 2026 Carlos Torres - Todos los derechos reservados
+
+   Usuario: user | Sin contraseña (live session)
+
+EOF
+
+# Configurar issue.net
+cp /etc/issue /etc/issue.net
+
+# Configurar MOTD dinámico
+cat > /etc/update-motd.d/00-carlosos << 'EOF'
+#!/bin/bash
+echo ""
+echo "   ____           _   ____   _____"
+echo "  / ___|__ _ _ __| |_|  _ \ / ___|"
+echo " | |   / _\` | '__| __| | | | |  _"
+echo " | |__| (_| | |  | |_| |_| | | | |"
+echo "  \____\__,_|_|   \__|____/|_| |_|"
+echo ""
+echo "        CarlosOS Live 1.0"
+echo "   Sistema Operativo Personalizado"
+echo "   Basado en Debian GNU/Linux"
+echo ""
+echo "   © 2026 Carlos Torres - Todos los derechos reservados"
+echo ""
+EOF
+chmod +x /etc/update-motd.d/00-carlosos
+
+# Configurar neofetch si está instalado
+if command -v neofetch >/dev/null 2>&1; then
+    log "Configurando neofetch..."
+    mkdir -p /etc/skel/.config/neofetch
+    cat > /etc/skel/.config/neofetch/config.conf << 'EOF'
+# Configuración de Neofetch para CarlosOS
+print_info() {
+    info title
+    info underline
+    info "OS" distro
+    info "Host" model
+    info "Kernel" kernel
+    info "Uptime" uptime
+    info "Packages" packages
+    info "Shell" shell
+    info "Resolution" resolution
+    info "DE" de
+    info "WM" wm
+    info "Theme" theme
+    info "Icons" icons
+    info "Terminal" term
+    info "CPU" cpu
+    info "GPU" gpu
+    info "Memory" memory
+    info line_break
+    info cols
+}
+
+# Colores personalizados para CarlosOS (Azul y blanco)
+colors=(4 7 4 6 4 7)
+
+# Logo ASCII personalizado
+ascii_distro="CarlosOS"
+
+# Información del sistema
+distro="CarlosOS Live 1.0"
+
+# Ocultar información sensible
+info_cols="2"
+EOF
+fi
+
+# Configurar tmux si está instalado
+if command -v tmux >/dev/null 2>&1; then
+    log "Configurando tmux..."
+    cat > /etc/skel/.tmux.conf << 'EOF'
+# Configuración de tmux para CarlosOS
+set -g default-terminal "screen-256color"
+set -g history-limit 10000
+set -g mouse on
+
+# Atajos de teclado
+bind r source-file ~/.tmux.conf \; display "Configuración recargada!"
+
+# Tema de colores (Azul CarlosOS)
+set -g status-bg colour235
+set -g status-fg colour136
+set -g status-left '#[fg=colour235,bg=colour252,bold] ❐ #S #[fg=colour252,bg=colour238,nobold]⮀#[fg=colour245,bg=colour238,bold] #(whoami) #[fg=colour238,bg=colour234,nobold]⮀'
+set -g status-right '#[fg=colour238,bg=colour234,nobold]⮂#[fg=colour245,bg=colour238] #h #[fg=colour252]⮂#[fg=colour235,bg=colour252,bold] %H:%M '
+set -g window-status-format "#[fg=white,bg=colour234] #I #W "
+set -g window-status-current-format "#[fg=colour234,bg=colour39]⮀#[fg=colour25,bg=colour39,noreverse,bold] #I ⮁ #W #[fg=colour39,bg=colour234,nobold]⮀"
+EOF
+fi
+
+# Crear script de bienvenida
+cat > /usr/local/bin/carlosos-welcome << 'EOF'
+#!/bin/bash
+# Script de bienvenida para CarlosOS
+
+echo ""
+echo "   ____           _   ____   _____"
+echo "  / ___|__ _ _ __| |_|  _ \ / ___|"
+echo " | |   / _\` | '__| __| | | | |  _"
+echo " | |__| (_| | |  | |_| |_| | | | |"
+echo "  \____\__,_|_|   \__|____/|_| |_|"
+echo ""
+echo "        ¡Bienvenido a CarlosOS Live!"
+echo "   Sistema Operativo Personalizado"
+echo "   Basado en Debian GNU/Linux"
+echo ""
+echo "   © 2026 Carlos Torres - Todos los derechos reservados"
+echo ""
+echo "   Información del sistema:"
+echo "   $(uname -a)"
+echo ""
+echo "   Comandos útiles:"
+echo "   - neofetch: Información detallada del sistema"
+echo "   - htop: Monitor de procesos"
+echo "   - mpv: Reproductor multimedia"
+echo "   - firefox-esr: Navegador web"
+echo "   - gparted: Administrador de particiones"
+echo "   - bleachbit: Limpieza del sistema"
+echo "   - timeshift: Crear puntos de restauración"
+echo ""
+echo "   CarlosOS VPN: Ejecutar desde /home/user/mi_app"
+echo ""
+echo "   Para más información visita: https://carlosos.org"
+echo ""
+EOF
+
+chmod +x /usr/local/bin/carlosos-welcome
+
+# Añadir al PATH del usuario y configurar bash
+cat >> /etc/skel/.bashrc << 'EOF'
+
+# CarlosOS customizations
+export PATH="$PATH:/usr/local/bin"
+
+# Alias útiles
+alias carlosos='carlosos-welcome'
+alias update='sudo apt update && sudo apt upgrade -y'
+alias cleanup='sudo apt autoremove && sudo apt autoclean'
+
+# Mostrar bienvenida al iniciar sesión
+carlosos-welcome
+EOF
+
+# Configurar sudo sin contraseña para el usuario live
+echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user
+chmod 440 /etc/sudoers.d/user
+
+# Configurar Plymouth para splash screen de boot
+log "Configurando Plymouth..."
+if [ -f /etc/plymouth/plymouthd.conf ]; then
+    cat >> /etc/plymouth/plymouthd.conf << 'EOF'
+
+# CarlosOS Theme
+Theme=carlosos
+EOF
+fi
+
+# Crear directorio para la aplicación VPN
+log "Preparando directorio para CarlosOS VPN..."
+mkdir -p /home/user/mi_app
+chown -R 1000:1000 /home/user/mi_app
+
+log "Configuración de CarlosOS completada exitosamente."

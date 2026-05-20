@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Bienvenido a CarlinuxOS" > /etc/motd
+

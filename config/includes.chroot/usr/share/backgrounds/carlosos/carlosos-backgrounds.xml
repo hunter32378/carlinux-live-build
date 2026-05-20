@@ -1,0 +1,14 @@
+<background>
+  <starttime>
+    <year>2024</year>
+    <month>01</month>
+    <day>01</day>
+    <hour>0</hour>
+    <minute>0</minute>
+    <second>0</second>
+  </starttime>
+  <static>
+    <duration>86400.0</duration>
+    <file>/usr/share/backgrounds/carlosos/fondo-carlosos.png</file>
+  </static>
+</background>

@@ -1,0 +1,51 @@
+name: Build CarlosOS ISO
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y live-build debootstrap build-essential
+
+    - name: Prepare Build Environment
+      run: |
+        # Make scripts executable
+        chmod +x *.sh
+        
+        # Install images
+        bash install_images.sh
+
+    - name: Build ISO
+      run: |
+        # Clean any possible old build
+        sudo lb clean --purge
+        
+        # Run the build
+        sudo bash build_carlosos.sh
+
+    - name: Rename ISO (if needed)
+      run: |
+        # Ensure we capture the resulting ISO. Sometimes lb build outputs a different name.
+        if [ -f carlosos-live-1.0-amd64.hybrid.iso ]; then
+           echo "ISO found!"
+        else
+           mv live-image-amd64.hybrid.iso carlosos-live-1.0-amd64.hybrid.iso || true
+        fi
+
+    - name: Upload ISO Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CarlosOS-Live-Light-1.0
+        path: carlosos-live-1.0-amd64.hybrid.iso
+        retention-days: 5

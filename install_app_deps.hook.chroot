@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+APP_DIR="/home/user/mi_app"
+
+echo ">>> Verificando si la aplicación personalizada existe en $APP_DIR"
+
+if [ -d "$APP_DIR" ] && [ -f "$APP_DIR/package.json" ]; then
+    echo ">>> Encontrado package.json. Instalando dependencias con npm..."
+
+    # Navegar al directorio de la aplicación
+    cd "$APP_DIR"
+
+    # Instalar dependencias. Se ejecuta como root, --unsafe-perm ayuda a evitar problemas.
+    npm install --unsafe-perm
+
+    # Cambiar el propietario al usuario 'user' (UID 1000) que se usará en el sistema live.
+    # Esto es crucial para que puedas modificar los archivos sin ser root.
+    chown -R 1000:1000 "$APP_DIR"
+
+    echo ">>> Dependencias de Node.js instaladas y permisos corregidos."
+else
+    echo ">>> ADVERTENCIA: No se encontró la aplicación o package.json en $APP_DIR. Omitiendo 'npm install'."
+fi

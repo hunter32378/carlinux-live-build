@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <!-- Gradiente principal azul-cian -->
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BFFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00FFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7B68EE;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para efecto neón -->
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7B68EE;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Filtro para efecto glow/neón -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur3"/>
+      <feMerge>
+        <feMergeNode in="blur3"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Máscara para crear el corte de la C -->
+    <clipPath id="cCutout">
+      <path d="M 100,30 
+               A 70,70 0 1,0 100,170 
+               A 55,55 0 1,1 100,145 
+               A 40,40 0 1,0 100,55 
+               L 100,30 Z
+               M 145,85 L 175,100 L 145,115 Z"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Fondo circular sutil -->
+  <circle cx="100" cy="100" r="95" fill="rgba(0,191,255,0.05)" stroke="rgba(0,191,255,0.2)" stroke-width="1"/>
+  
+  <!-- Anillo exterior (C grande) -->
+  <path id="outerC" 
+        d="M 100,25 
+           A 75,75 0 1,0 100,175 
+           A 75,75 0 1,0 100,25"
+        fill="none" 
+        stroke="url:#neonGradient)" 
+        stroke-width="12"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"
+        clip-path="url(#cCutout)"/>
+  
+  <!-- Anillo medio -->
+  <path id="middleC" 
+        d="M 100,40 
+           A 60,60 0 1,0 100,160 
+           A 60,60 0 1,0 100,40"
+        fill="none" 
+        stroke="url:#blueGradient)" 
+        stroke-width="10"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"
+        clip-path="url(#cCutout)"/>
+  
+  <!-- Anillo interior -->
+  <path id="innerC" 
+        d="M 100,55 
+           A 45,45 0 1,0 100,145 
+           A 45,45 0 1,0 100,55"
+        fill="none" 
+        stroke="url:#neonGradient)" 
+        stroke-width="8"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"
+        clip-path="url(#cCutout)"/>
+  
+  <!-- Anillo más interior -->
+  <path id="innermostC" 
+        d="M 100,68 
+           A 32,32 0 1,0 100,132 
+           A 32,32 0 1,0 100,68"
+        fill="none" 
+        stroke="url:#blueGradient)" 
+        stroke-width="6"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"
+        clip-path="url(#cCutout)"/>
+  
+  <!-- Punto de corte decorativo -->
+  <circle cx="160" cy="100" r="8" fill="#00BFFF" filter="url(#neonGlow)">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Líneas decorativas de fondo -->
+  <line x1="20" y1="20" x2="50" y2="50" stroke="rgba(0,191,255,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+  </line>
+  <line x1="180" y1="180" x2="150" y2="150" stroke="rgba(123,104,238,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+  </line>
+  <line x1="180" y1="20" x2="150" y2="50" stroke="rgba(0,255,255,0.2)" stroke-width="1">
+    <animate attributeName="opacity" values="0.1;0.4;0.1" dur="5s" repeatCount="indefinite"/>
+  </line>
+  <line x1="20" y1="180" x2="50" y2="150" stroke="rgba(0,191,255,0.2)" stroke-width="1">
+    <animate attributeName="opacity" values="0.1;0.4;0.1" dur="3.5s" repeatCount="indefinite"/>
+  </line>
+</svg>
