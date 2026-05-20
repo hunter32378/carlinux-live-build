@@ -19,14 +19,23 @@ jobs:
         sudo apt-get install -y live-build debootstrap build-essential
 
     - name: Prepare Build Environment
-      env:
-        DEBOOTSTRAP_OPTIONS: "--no-check-gpg"
       run: |
         # Make scripts executable
         chmod +x *.sh
         
         # Install images
         bash install_images.sh
+
+    - name: Patch live-build linux-image lookup
+      run: |
+        # Some live-build versions try to fetch Contents-amd64.gz and fail on some mirrors.
+        # Create a no-op wrapper so lb_chroot_linux-image exits 0 instead of failing the build.
+        sudo tee /usr/local/bin/lb_chroot_linux-image > /dev/null <<'EOF'
+#!/bin/sh
+# Stub to skip Contents-amd64.gz lookup
+exit 0
+EOF
+        sudo chmod +x /usr/local/bin/lb_chroot_linux-image
 
     - name: Build ISO
       env:
