@@ -29,13 +29,8 @@ jobs:
     - name: Patch live-build linux-image lookup
       run: |
         # Some live-build versions try to fetch Contents-amd64.gz and fail on some mirrors.
-        # Create a no-op wrapper so lb_chroot_linux-image exits 0 instead of failing the build.
-        sudo tee /usr/local/bin/lb_chroot_linux-image > /dev/null <<'EOF'
-#!/bin/sh
-# Stub to skip Contents-amd64.gz lookup
-exit 0
-EOF
-        sudo chmod +x /usr/local/bin/lb_chroot_linux-image
+        # Create a no-op wrapper using printf to avoid YAML heredoc indentation issues.
+        sudo bash -lc 'printf "%s\n" "#!/bin/sh" "# Stub to skip Contents-amd64.gz lookup" "exit 0" > /usr/local/bin/lb_chroot_linux-image && chmod +x /usr/local/bin/lb_chroot_linux-image'
 
     - name: Build ISO
       env:
