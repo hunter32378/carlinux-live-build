@@ -16,7 +16,10 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y live-build debootstrap build-essential debian-archive-keyring
+        sudo apt-get install -y live-build debootstrap build-essential wget
+        # Install latest Debian archive keyring for Bookworm bootstrap
+        wget -q http://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.4_all.deb -O /tmp/debian-archive-keyring.deb
+        sudo dpkg -i /tmp/debian-archive-keyring.deb
 
     - name: Prepare Build Environment
       run: |
