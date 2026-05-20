@@ -7,6 +7,7 @@
 # =============================================================================
 
 set -e
+set -o pipefail
 
 # =============================================================================
 # CONFIGURACIÓN
@@ -227,7 +228,8 @@ build_iso() {
         success "Construcción completada"
     else
         error "Fallo en la construcción"
-        log "Revisa $BUILD_LOG para más detalles"
+        log "--- CONTENIDO DEL LOG DE ERRORES ---"
+        tail -n 100 "$BUILD_LOG" || true
         exit 1
     fi
 }
