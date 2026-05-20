@@ -9,7 +9,6 @@ lb config noauto \
     --architectures amd64 \
     --distribution bookworm \
     --mode debian \
-
     --archive-areas "main contrib non-free non-free-firmware" \
     --mirror-bootstrap https://deb.debian.org/debian \
     --mirror-chroot https://deb.debian.org/debian \
@@ -25,7 +24,7 @@ lb config noauto \
     --iso-publisher "Carlos Torres" \
     --iso-volume "CARLOSOS_LIVE" \
     --iso-preparer "Carlos Torres Project" \
---binary-images iso-hybrid \
+    --binary-images iso-hybrid \
     --linux-packages "linux-image-amd64" \
     --debian-installer false \
     --security false \
