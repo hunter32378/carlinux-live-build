@@ -9,6 +9,9 @@
 set -e
 set -o pipefail
 
+# Pasar --no-check-gpg a debootstrap para evitar error de keyring
+export DEBOOTSTRAP_OPTIONS="--no-check-gpg"
+
 # =============================================================================
 # CONFIGURACIÓN
 # =============================================================================
