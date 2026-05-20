@@ -177,7 +177,7 @@ prepare_environment() {
     
     log "Limpiando builds anteriores..."
     lb clean --purge 2>/dev/null || true
-    rm -rf chroot cache binary live 2>/dev/null || true
+    rm -rf chroot cache binary live .build 2>/dev/null || true
     success "Limpieza completada"
 }
 
@@ -213,8 +213,14 @@ build_iso() {
     log "Iniciando construcción de CarlosOS Live ISO..."
     log "Hora de inicio: $TIMESTAMP"
     
-    # Ejecutar lb build
-    if lb build 2>&1 | tee -a "$BUILD_LOG"; then
+    # Limpiar caché de bootstrap para evitar corrupción
+    rm -rf cache/bootstrap cache/cachefile packages* 2>/dev/null || true
+    
+    # Ejecutar lb build capturando exit code correctamente
+    lb build 2>&1 | tee -a "$BUILD_LOG"
+    local LB_EXIT=${PIPESTATUS[0]}
+    
+    if [ $LB_EXIT -eq 0 ]; then
         success "Construcción completada"
     else
         error "Fallo en la construcción"
