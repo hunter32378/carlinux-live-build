@@ -28,4 +28,5 @@ lb config noauto \
     --binary-images iso-hybrid \
     --memtest none \
     --firmware-chroot true \
-    --security true
+    --updates false \
+    --security false
