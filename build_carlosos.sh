@@ -220,17 +220,20 @@ build_iso() {
     rm -rf cache/bootstrap cache/cachefile packages* 2>/dev/null || true
     
     # Ejecutar lb build capturando exit code correctamente
+    # Prepend repo bin so we can override helper scripts (stub lb_chroot_linux-image)
+    export PATH="$SCRIPT_DIR/bin:$PATH"
     lb build 2>&1 | tee -a "$BUILD_LOG"
     local LB_EXIT=${PIPESTATUS[0]}
-    
+
     if [ $LB_EXIT -eq 0 ]; then
         success "Construcción completada"
     else
         error "Fallo en la construcción"
         log "--- CONTENIDO DEL LOG DE ERRORES ---"
-        tail -n 100 "$BUILD_LOG" || true
+        tail -n 200 "$BUILD_LOG" || true
         exit 1
     fi
+
 }
 
 # =============================================================================
