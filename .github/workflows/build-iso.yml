@@ -26,11 +26,22 @@ jobs:
         # Install images
         bash install_images.sh
 
-    - name: Patch live-build linux-image lookup
+    - name: Patch live-build linux-image lookup (overwrite installed script)
       run: |
-        # Some live-build versions try to fetch Contents-amd64.gz and fail on some mirrors.
-        # Create a no-op wrapper using printf to avoid YAML heredoc indentation issues.
-        sudo bash -lc 'printf "%s\n" "#!/bin/sh" "# Stub to skip Contents-amd64.gz lookup" "exit 0" > /usr/local/bin/lb_chroot_linux-image && chmod +x /usr/local/bin/lb_chroot_linux-image'
+        # Some live-build versions call the installed lb_chroot_linux-image script directly.
+        # Find the installed script path and replace it with a no-op stub so the runner doesn't fail
+        # when a mirror does not provide Contents-amd64.gz.
+        set -e
+        LB_PATH="$(dpkg -L live-build 2>/dev/null | grep -E 'lb_chroot_linux-image$' || true)"
+        if [ -n "$LB_PATH" ]; then
+          sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub: skip Contents-amd64.gz lookup' 'exit 0' > '$LB_PATH'"
+          sudo chmod +x "$LB_PATH"
+          echo "Replaced installed lb_chroot_linux-image at $LB_PATH"
+        else
+          echo "lb_chroot_linux-image not found via dpkg -L; creating /usr/local/bin stub instead"
+          sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub: skip Contents-amd64.gz lookup' 'exit 0' > /usr/local/bin/lb_chroot_linux-image"
+          sudo chmod +x /usr/local/bin/lb_chroot_linux-image
+        fi
 
     - name: Build ISO
       env:
