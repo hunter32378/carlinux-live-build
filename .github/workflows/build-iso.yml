@@ -26,22 +26,27 @@ jobs:
         # Install images
         bash install_images.sh
 
-    - name: Patch live-build linux-image lookup (overwrite installed script)
+    - name: Patch live-build scripts to skip Contents lookup
       run: |
-        # Some live-build versions call the installed lb_chroot_linux-image script directly.
-        # Find the installed script path and replace it with a no-op stub so the runner doesn't fail
-        # when a mirror does not provide Contents-amd64.gz.
+        # Replace any live-build helper that attempts to download Contents-amd64.gz
+        # with a no-op stub. This covers both chroot and binary helpers.
         set -e
-        LB_PATH="$(dpkg -L live-build 2>/dev/null | grep -E 'lb_chroot_linux-image$' || true)"
-        if [ -n "$LB_PATH" ]; then
-          sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub: skip Contents-amd64.gz lookup' 'exit 0' > '$LB_PATH'"
-          sudo chmod +x "$LB_PATH"
-          echo "Replaced installed lb_chroot_linux-image at $LB_PATH"
-        else
-          echo "lb_chroot_linux-image not found via dpkg -L; creating /usr/local/bin stub instead"
-          sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub: skip Contents-amd64.gz lookup' 'exit 0' > /usr/local/bin/lb_chroot_linux-image"
-          sudo chmod +x /usr/local/bin/lb_chroot_linux-image
-        fi
+        # find installed lb scripts that include 'linux' or 'debian-installer' in name
+        dpkg -L live-build 2>/dev/null | grep -E '/lb_.*(linux|debian-installer)(-)?' || true | while read -r path; do
+          if [ -n "$path" ] && [ -f "$path" ]; then
+            echo "Overwriting $path"
+            sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub: skip Contents-amd64.gz lookup' 'exit 0' > '$path'"
+            sudo chmod +x "$path"
+          fi
+        done
+        # ensure fallback stubs in /usr/local/bin
+        for name in lb_chroot_linux-image lb_binary_linux-image lb_binary_debian-installer lb_chroot_debian-installer; do
+          if [ ! -x "/usr/local/bin/$name" ]; then
+            sudo bash -lc "printf '%s\n' '#!/bin/sh' '# stub fallback' 'exit 0' > /usr/local/bin/$name"
+            sudo chmod +x /usr/local/bin/$name
+            echo "Created fallback /usr/local/bin/$name"
+          fi
+        done
 
     - name: Build ISO
       env:
