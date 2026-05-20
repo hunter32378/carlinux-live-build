@@ -1,0 +1,2 @@
+# Instalar kernel explícito para evitar que lb trate de descargar Contents-amd64.gz
+linux-image-amd64
