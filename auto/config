@@ -25,7 +25,7 @@ lb config noauto \
     --iso-publisher "Carlos Torres" \
     --iso-volume "CARLOSOS_LIVE" \
     --iso-preparer "Carlos Torres Project" \
-    --binary-images iso-hybrid \
+--binary-images iso-hybrid \
     --linux-packages "linux-image-amd64" \
     --security false \
     --memtest none \
