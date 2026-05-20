@@ -19,7 +19,7 @@ lb config noauto \
     --parent-mirror-bootstrap http://deb.debian.org/debian/ \
     --parent-mirror-chroot http://deb.debian.org/debian/ \
     --parent-mirror-binary http://deb.debian.org/debian/ \
-    --apt-options "--yes --force-yes" \
+    --apt-options "--yes" \
     --bootappend-live "boot=live components username=user hostname=carlosos quiet splash" \
     --iso-application "CarlosOS Live 1.0" \
     --iso-publisher "Carlos Torres" \
@@ -27,6 +27,4 @@ lb config noauto \
     --iso-preparer "Carlos Torres Project" \
     --binary-images iso-hybrid \
     --memtest none \
-    --firmware-chroot true \
-    --updates false \
-    --security false
+    --firmware-chroot true

@@ -6,3 +6,4 @@ binary/
 live/
 *.iso
 *.log
+action_log*.txt

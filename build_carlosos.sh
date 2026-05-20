@@ -195,19 +195,9 @@ configure_live_build() {
         exit 1
     fi
     
-    # Hacer ejecutable y correr
+    # Hacer ejecutable y ejecutar auto/config
     chmod +x auto/config
-    source auto/config
-    
-    # Configurar parámetros adicionales
-    lb config \
-        --distribution bookworm \
-        --architectures amd64 \
-        --binary-images iso-hybrid \
-        --debian-installer live \
-        --archive-areas "main contrib non-free non-free-firmware" \
-        --apt-options "--yes --force-yes" \
-        --bootappend-live "boot=live components username=user hostname=carlosos quiet splash"
+    bash auto/config
     
     check_error "Fallo en lb config"
     success "Live-build configurado"
